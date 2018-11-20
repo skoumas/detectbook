@@ -1,0 +1,8 @@
+<?
+class Guestbook extends Model {
+
+ 
+
+
+}
+?>

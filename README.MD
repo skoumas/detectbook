@@ -1,5 +1,11 @@
 #detectbook
-To run please:
+
+##TODO
+- Comments Function
+- Signup function (login already there).
+- Setup routing in React and break by components
+
+##To run please do:
 1) Have docker and docker-compose at your computer
 2) Run `docker-compose up -d`
 3) Login to the database [detectbook] at port [9906] with username [detectbook] and password [detectB00k!@#] at your [localhost] and import the sql file from the /Seed folder

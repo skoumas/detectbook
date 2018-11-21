@@ -12,6 +12,9 @@ function __autoload($class)
 
 $router = new Router();
 header('Access-Control-Allow-Origin: *');
+
+
+
 //Gets
 $router->get('/', function(){
 	echo ("<img src='Images/ohhimark.jpg'/><br>");
@@ -53,20 +56,22 @@ $router->get('/api/entry/{:id}/comments', function($id){
 
 //POSTS ^^
 $router->post('/api/user/create', function(){
-
-	$validator = new Validator($_POST,array(
+	$post = json_decode(file_get_contents('php://input'));
+	$validator = new Validator((array)$post,array(
 		"name"=>"required",
 		"password"=>"required",
 		"email"=>"required|email"
 	));
 
-	if ($validator->isValid()) {
-		die(json_encode($validator->errors()));
-	}
+	// if ($validator->isValid()) {
+	// 	die(json_encode($validator->errors()));
+	// }
 	$user = new User();
-	$user->name = $_POST["name"];
-	$user->email = $_POST["email"];
-	$user->password = $_POST["password"];
+	$user->name = $post->name;
+	$user->email = $post->email;
+	$user->password = $post->password;
+	$user->created_at =  date('Y-m-d H:i:s');
+	$user->updated_at = date('Y-m-d H:i:s');
 	$user->save();
 });
 
@@ -90,16 +95,19 @@ $router->post('/api/user/login', function(){
 });
 
 $router->post('/api/checkToken', function(){
+
 	$post = json_decode(file_get_contents('php://input'));
-	// $validator = new Validator((array)$post,array(
-	// 	"token"=>"required"
-	// ));
-	//
+
+	$validator = new Validator((array)$post,array(
+		"token"=>"required"
+	));
+
 	// if ($validator->isValid()) {
 	// 	die(json_encode($validator->errors()));
 	// }
 	$user = new User();
 	$user->getByToken($post->token);
+
 	if ($user) {
 		die(json_encode(["success"=>true, "user"=>$user]));
 	} else {
@@ -107,9 +115,11 @@ $router->post('/api/checkToken', function(){
 	}
 });
 
+
+
+
 $router->post('/api/entry/create', function(){
 	$post = json_decode(file_get_contents('php://input'));
-
 	$entry = new Entry();
 	$entry->guestbook_id = 1;
 	$entry->user_id = $post->user_id;
@@ -118,14 +128,24 @@ $router->post('/api/entry/create', function(){
 	$entry->created_at =  date('Y-m-d H:i:s');
 	$entry->updated_at = date('Y-m-d H:i:s');
 	$entry->save();
+	die(json_encode(["success"=>true, "entry"=>$entry]));
 });
 
-$router->post('/api/comment/new', function(){
-	$entry = new Entry();
-	$entry->guestbook_id = 1;
-	$entry->user_id = 1;
-	$entry->content = "Test";
-	$entry->save();
+$router->delete('/api/entries/{:id}', function($id){
+	$post = json_decode(file_get_contents('php://input'));
+	$success = Entry::delete($id);
+
+	die(json_encode(["success"=>$success]));
+});
+
+$router->post('/api/comment/create', function(){
+	$comment = new Comment();
+	$comment->guestbook_id = 1;
+	$comment->user_id = 1;
+	$comment->content = "Test";
+	$comment->created_at =  date('Y-m-d H:i:s');
+	$comment->updated_at = date('Y-m-d H:i:s');
+	$comment->save();
 });
 
 $router->match($_SERVER,$_POST);

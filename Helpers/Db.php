@@ -8,6 +8,7 @@ class Db {
 	}
 
 	private function connect() {
+
 		$this->pdo = new PDO("mysql:host=db;dbname=detectbook",$_ENV['USER'],$_ENV['PASSWORD'], $options);
 	}
 
@@ -20,6 +21,7 @@ class Db {
 		while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 			$final[] = (object) $row;
 		}
+
 		return $final;
 	}
 
@@ -37,13 +39,19 @@ class Db {
 	}
 
 	public function insert($data,$table) {
+		 
 		$statement = $this->pdo->prepare('INSERT INTO '.$table.' (' . implode(", ", array_keys($data)) . ') VALUES (' . implode(", ", array_map(function($x){return "?";},$data)) . ');');
-		$statement->execute(array_values($data));
+		$result = $statement->execute(array_values($data));
 	}
+
 	public function update($data, $table) {
-		  
+
 		$statement = $this->pdo->prepare('UPDATE ' . $table .' SET ' . implode(", ", array_map(function($x){return $x."=?";},array_keys($data))) . ' WHERE id=' . $data["id"]);
-		$statement->execute(array_values($data));
+		$result = $statement->execute(array_values($data));
+	}
+
+	public function close() {
+		$this->pdo = null;
 	}
 }
 ?>

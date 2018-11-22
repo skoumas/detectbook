@@ -152,7 +152,9 @@ class App extends Component {
 		.then(
 			(result) => {
 				if (result.success) {
-
+					this.setState({
+						page:"guestbook"
+					});
 				} else {
 
 				}

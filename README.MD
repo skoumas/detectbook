@@ -1,9 +1,18 @@
 #detectbook
 
+## Latest Relesae
+- Added Edit Entry
+- Added Delete Entry
+- Comments can happen now
+- Signup function
+- Validator fixed
+- Relationship hasMany retrieves data
+
 ##TODO
-- Comments Function
-- Signup function (login already there).
-- Setup routing in React and break by components
+- Fix the to many DB connections error when retrieving child of hasMany
+- Return user data for each comment
+- Edit comment
+- Delete comment
 
 ##To run please do:
 1) Have docker and docker-compose at your computer

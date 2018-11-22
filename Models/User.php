@@ -23,7 +23,8 @@ class User extends Model {
 
 	public function getByToken($token) {
 		$db = new Db;
-		$result = $db->query("Select * from users where token='$token';");
+		$result = $db->query("Select * from users where token='" .$token . "';");
+
 		if ($result!=[]) {
 			forEach($result[0] as $key=>$value) {
 				$this->{$key} = $value;

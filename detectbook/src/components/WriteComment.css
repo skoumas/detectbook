@@ -1,0 +1,13 @@
+
+.writeComment {
+	padding: 10px;;
+	background: #d3d3d3;
+
+}
+.writeComment textarea {
+	width: 100%;
+	background-color: #f3f3f3;
+	border: 1px solid white;
+	padding: 10px;
+	outline:none;
+}

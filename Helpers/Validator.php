@@ -6,6 +6,7 @@ class Validator {
 
 	function __construct($data,$rules) {
 		$this->errors = [];
+		$this->valid = true;
 		$this->valid = $this->validate($data,$rules);
 	}
 
@@ -36,24 +37,23 @@ class Validator {
 	}
 
 	private function addError($key,$message) {
-		 echo( $key . " " . $message);
+		$this->valid = false;
 		$this->errors[$key] = $key . " " . $message;
 	}
 
 	public function validate($data,$rules) {
+
 		forEach($rules as $rkey=>$rvalue) {
 			forEach($data as $dkey=>$dvalue) {
 				if ($dkey==$rkey) {
 					$validators = explode("|",$rvalue);
 					forEach($validators as $validator) {
-						if (!self::$validator($dkey, $dvalue)) {
-							return false;
-						}
+						self::$validator($dkey, $dvalue);
 					}
 				}
 			}
 		}
-		return true;
+		return $this->valid;
 	}
 }
 ?>

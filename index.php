@@ -54,18 +54,25 @@ $router->get('/api/entry/{:id}/comments', function($id){
 	die(json_encode($comments));
 });
 
+$router->get('/api/entries/{:id}/', function($id){
+	header('Content-Type: application/json');
+	$entry = Entry::find($id);
+	die(json_encode($entry));
+});
+
 //POSTS ^^
 $router->post('/api/user/create', function(){
+
 	$post = json_decode(file_get_contents('php://input'));
 	$validator = new Validator((array)$post,array(
 		"name"=>"required",
-		"password"=>"required",
-		"email"=>"required|email"
+		"email"=>"required|email",
+		"password"=>"required"
 	));
 
-	// if ($validator->isValid()) {
-	// 	die(json_encode($validator->errors()));
-	// }
+	if (!$validator->isValid()) {
+		die(json_encode(["success"=>false,"errors"=>$validator->errors()]));
+	}
 	$user = new User();
 	$user->name = $post->name;
 	$user->email = $post->email;
@@ -73,6 +80,7 @@ $router->post('/api/user/create', function(){
 	$user->created_at =  date('Y-m-d H:i:s');
 	$user->updated_at = date('Y-m-d H:i:s');
 	$user->save();
+	die(json_encode(["success"=>true]));
 });
 
 $router->post('/api/user/login', function(){
@@ -115,9 +123,6 @@ $router->post('/api/checkToken', function(){
 	}
 });
 
-
-
-
 $router->post('/api/entry/create', function(){
 	$post = json_decode(file_get_contents('php://input'));
 	$entry = new Entry();
@@ -131,21 +136,84 @@ $router->post('/api/entry/create', function(){
 	die(json_encode(["success"=>true, "entry"=>$entry]));
 });
 
-$router->delete('/api/entries/{:id}', function($id){
+$router->post('/api/entries/{:id}/delete', function($id){
+	$post = json_decode(file_get_contents('php://input'));
+
+	$validator = new Validator((array)$post,array(
+		"_token"=>"required"
+	));
+
+	if (!$validator->isValid()) {
+		die(json_encode(["success"=>false,"errors"=>$validator->errors()]));
+	}
+
+	$user = new User();
+	$userExists = $user->getByToken($post->_token);
+
+	if (!$userExists) {
+		die(json_encode(["success"=>false,"errors"=>"Token is invalid"]));
+	}
 	$post = json_decode(file_get_contents('php://input'));
 	$success = Entry::delete($id);
 
 	die(json_encode(["success"=>$success]));
 });
 
+$router->post('/api/entries/{:id}/update', function($id){
+	$post = json_decode(file_get_contents('php://input'));
+
+	$validator = new Validator((array)$post,array(
+		"_token"=>"required"
+	));
+
+	if (!$validator->isValid()) {
+		die(json_encode(["success"=>false,"errors"=>$validator->errors()]));
+	}
+
+	$user = new User();
+	$userExists = $user->getByToken($post->_token);
+
+	if (!$userExists) {
+		die(json_encode(["success"=>false,"errors"=>"Token is invalid"]));
+	}
+
+	$entry = new Entry();
+	$entry->find($id);
+	$entry->title = $post->title;
+	$entry->content = $post->content;
+	$entry->updated_at = date('Y-m-d H:i:s');
+	$entry->save();
+
+	die(json_encode(["success"=>true]));
+});
+
 $router->post('/api/comment/create', function(){
+
+	$post = json_decode(file_get_contents('php://input'));
+
+	$validator = new Validator((array)$post,array(
+		"_token"=>"required"
+	));
+
+	if (!$validator->isValid()) {
+		die(json_encode(["success"=>false,"errors"=>$validator->errors()]));
+	}
+
+	$user = new User();
+	$userExists = $user->getByToken($post->_token);
+
+	if (!$userExists) {
+		die(json_encode(["success"=>false,"errors"=>"Token is invalid"]));
+	}
+
 	$comment = new Comment();
-	$comment->guestbook_id = 1;
-	$comment->user_id = 1;
-	$comment->content = "Test";
+	$comment->user_id = $user->id;
+	$comment->content = $post->comment;
+	$comment->entry_id = $post->entry_id;
 	$comment->created_at =  date('Y-m-d H:i:s');
 	$comment->updated_at = date('Y-m-d H:i:s');
 	$comment->save();
+	die(json_encode(["success"=>true]));
 });
 
 $router->match($_SERVER,$_POST);

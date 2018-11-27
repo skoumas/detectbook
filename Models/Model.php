@@ -8,7 +8,6 @@ class Model
 	private static $order="order by id DESC";
 	private static $hasMany = ["comment"];
 
-
 	//For making life better!
 	private static function pluralize($string) {
 	    $last_letter = strtolower($string[strlen($string)-1]);
@@ -22,15 +21,13 @@ class Model
 	    }
 	}
 
-
-
 	private static function tableName() {
 		return self::pluralize(strtolower(get_called_class()));
 	}
+
 	private static function tableNameS() {
 		return (strtolower(get_called_class()));
 	}
-
 	public static function all() {
 		$db = new Db();
 		$data = $db->get("select * from " . self::tableName() . " order by id DESC" );
@@ -85,7 +82,6 @@ class Model
 				 }
 			 }
 		}
-
 		return $data;
 	}
 
@@ -98,7 +94,6 @@ class Model
 			return true;
 		}
 		return false;
-
 	}
 
 	// TODO
@@ -121,15 +116,13 @@ class Model
 	}
 
 	public function save() {
-
 		$db = new Db();
 		$exists = $db->query("Select * from " . $this->tableName() . " where id='" . $this->id . "';");
 
 		if ($exists[0]!=[]) {
-			// update
 			$db->update((array)$this,$this->tableName());
 		} else {
-			 
+
 			$db->insert((array)$this,$this->tableName());
 		}
 	}

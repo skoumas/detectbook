@@ -78,7 +78,6 @@ class Entry extends React.Component {
 						errorMessage: "Deleted!"
 					})
 					this.props.app.loadComponents();
-
 				} else {
 
 				}
@@ -101,14 +100,12 @@ class Entry extends React.Component {
 								<label htmlFor="exampleInputPassword1">Title</label>
 								<input type="text" className="form-control" name="title" value={this.state.editTitle} onChange={ (e) => this.setState({ editTitle: e.target.value }) }/>
 							</div>
-
 							<div className="form-group">
 									<label htmlFor="exampleInputPassword1">Comment</label>
 									<textarea  className="form-control" onChange={ (e) => this.setState({ editContent: e.target.value }) }>
 										{this.state.editContent}
 									</textarea>
 								</div>
-
 							<p>
 							<button onClick={this.editSubmit}>Save</button>
 							</p>
@@ -132,7 +129,6 @@ class Entry extends React.Component {
 					</div>
 				</div>
 				}
-
 				{this.props.entry.comments.map((comment, i) => {
 					return (<Comment comment={comment}></Comment>)
 				})}

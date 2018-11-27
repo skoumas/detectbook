@@ -46,7 +46,6 @@ class App extends Component {
 					});
 
 				} else {
-					//localStorage.removeItem('token');
 					this.setState({
 						logged: false
 					});
@@ -59,6 +58,7 @@ class App extends Component {
 			}
 		)
 	}
+
 	loadComponents() {
 		fetch("http://0.0.0.0:8100/api/guestbook/1/entries")
 			.then(res => res.json())
@@ -75,13 +75,13 @@ class App extends Component {
 			}
 		)
 	}
+
 	componentDidMount() {
 		if (localStorage.getItem('token')) {
 			this.checkToken();
 		}
 		this.loadComponents();
 	}
-
 
 	login() {
 		this.setState({
@@ -135,9 +135,6 @@ class App extends Component {
 			page: "signup"
 		});
 	}
-
-
-
 
 	signupSubmit() {
 		fetch("http://0.0.0.0:8100/api/user/create",{
@@ -200,11 +197,9 @@ class App extends Component {
 		return (
 			<div className="App">
 				<div className="container">
-
 					{this.state.logged &&
 						<div align="center">
 							<h1 align="center"> Oh hi {this.state.user.name } | <button onClick={this.logOut} className="btn-xs btn btn-danger">Logout</button></h1>
-
 						</div>
 					}
 					{!this.state.logged &&
@@ -218,7 +213,6 @@ class App extends Component {
 							{this.state.errorMessage}
 						</div>
 					}
-
 					{( this.state.page==="guestbook" || this.state.page==="entryCreate") &&
 						<div>
 							{this.state.entries.map((entry, i) => {
@@ -233,11 +227,8 @@ class App extends Component {
 									<button onClick={this.signup} className="btn-xs btn btn-success">Sign-up</button>
 								</div>
 							}
-
 						</div>
 					}
-
-
 					{this.state.page==="login" &&
 						<div>
 							<h2> Login!</h2>
@@ -245,16 +236,13 @@ class App extends Component {
 						  		<label htmlFor="exampleInputPassword1">Email</label>
 								<input type="text" className="form-control" name="email"  value={this.state.loginEmail}  onChange={ (e) => this.setState({ loginEmail: e.target.value }) }/>
 						 	</div>
-
 							<div className="form-group">
 								<label htmlFor="exampleInputPassword1">Password</label>
 								<input type="text" className="form-control" name="password" value={this.state.loginPassword} onChange={ (e) => this.setState({ loginPassword: e.target.value }) }/>
 							</div>
-
 							<button onClick={this.loginSubmit} className="btn btn-primary" type="submit">Submit</button>
 						</div>
 					}
-
 					{this.state.page==="signup" &&
 						<div>
 							<h2> Sign-up!</h2>
@@ -262,21 +250,17 @@ class App extends Component {
 								<label htmlFor="exampleInputPassword1">Name</label>
 								<input type="text" className="form-control"  value={this.state.signupName} onChange={ (e) => this.setState({ signupName: e.target.value }) }/>
 							</div>
-
 							<div className="form-group">
 						  		<label htmlFor="exampleInputPassword1">Email</label>
 								<input type="text" className="form-control"    value={this.state.signupEmail}  onChange={ (e) => this.setState({ signupEmail: e.target.value }) }/>
 						 	</div>
-
 							<div className="form-group">
 								<label htmlFor="exampleInputPassword1">Password</label>
 								<input type="text" className="form-control"   value={this.state.signupPassword} onChange={ (e) => this.setState({ signupPassword: e.target.value }) }/>
 							</div>
-
 							<button onClick={this.signupSubmit} className="btn btn-primary" type="submit">Submit</button>
 						</div>
 					}
-
 					{this.state.logged &&
 						<div className="entryCreate">
 							<h2> Write your impressions!</h2>
@@ -284,14 +268,12 @@ class App extends Component {
 								<label htmlFor="exampleInputPassword1">Title</label>
 								<input type="text" className="form-control" name="email"  value={this.state.entryTitle}  onChange={ (e) => this.setState({ entryTitle: e.target.value }) }/>
 							</div>
-
 							<div className="form-group">
 								<label htmlFor="exampleInputPassword1">Comment</label>
 								<textarea  className="form-control"    onChange={ (e) => this.setState({ entryContent: e.target.value }) }>
 									{this.state.entryContent}
 								</textarea>
 							</div>
-
 							<button onClick={this.entrySubmit} className="btn btn-primary" type="submit">Submit</button>
 						</div>
 					}

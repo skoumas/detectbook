@@ -13,7 +13,7 @@ class WriteComment extends React.Component {
      }
 
      handleChange(e) {
-        this.setState({ comment: e.target.value });
+        this.setState({comment: e.target.value});
      }
 
      keyPress(e){
@@ -50,13 +50,13 @@ class WriteComment extends React.Component {
 
 	render() {
 		return (
-				<div>
-				{this.props.app.state.logged &&
-					<div class="writeComment">
-						<textarea placeholder="Your comment..." onKeyDown={this.keyPress} onChange={this.handleChange}>{this.state.comment}</textarea>
-					</div>
-				}
+			<div>
+			{this.props.app.state.logged &&
+				<div class="writeComment">
+					<textarea placeholder="Your comment..." onKeyDown={this.keyPress} onChange={this.handleChange}>{this.state.comment}</textarea>
 				</div>
+			}
+			</div>
 		)
 	}
 }

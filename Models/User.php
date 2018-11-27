@@ -1,7 +1,6 @@
 <?
 class User extends Model {
-
-
+	
 	private function generateToken() {
 		return substr( "abcdefghijklmnopqrstuvwxyz" ,mt_rand( 0 ,25 ) ,1 ) .substr( md5( time( ) ) ,1 );
 	}
@@ -33,7 +32,6 @@ class User extends Model {
 		} else {
 			return false;
 		}
-
 	}
 }
 ?>

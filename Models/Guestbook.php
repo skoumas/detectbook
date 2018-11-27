@@ -1,8 +1,6 @@
 <?
 class Guestbook extends Model {
 
- 
-
 
 }
 ?>

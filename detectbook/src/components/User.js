@@ -8,6 +8,7 @@ class User extends React.Component {
 	}
 
 	componentDidMount(props) {
+
 	}
 
 	render() {

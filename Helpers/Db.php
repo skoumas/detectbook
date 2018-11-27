@@ -39,7 +39,7 @@ class Db {
 	}
 
 	public function insert($data,$table) {
-		 
+
 		$statement = $this->pdo->prepare('INSERT INTO '.$table.' (' . implode(", ", array_keys($data)) . ') VALUES (' . implode(", ", array_map(function($x){return "?";},$data)) . ');');
 		$result = $statement->execute(array_values($data));
 	}

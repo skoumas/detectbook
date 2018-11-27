@@ -11,7 +11,6 @@ class Comment extends React.Component {
 			editTitle: "",
 			editContent: ""
 		}
-
 	}
 
 	componentDidMount(props) {
@@ -20,7 +19,6 @@ class Comment extends React.Component {
 
 	edit() {
 		this.setState({
-
 		});
 	}
 

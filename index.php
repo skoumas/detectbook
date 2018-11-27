@@ -67,6 +67,12 @@ $router->post('/api/user/create', function(){
 	if (!$validator->isValid()) {
 		die(json_encode(["success"=>false,"errors"=>$validator->errors()]));
 	}
+
+	// $options = [
+	// 	'cost' => 12,
+	// ];
+	// $password = password_hash($post->password, PASSWORD_BCRYPT, $options);
+
 	$user = new User();
 	$user->name = $post->name;
 	$user->email = $post->email;

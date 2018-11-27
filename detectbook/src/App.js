@@ -248,15 +248,15 @@ class App extends Component {
 							<h2> Sign-up!</h2>
 							<div className="form-group">
 								<label htmlFor="exampleInputPassword1">Name</label>
-								<input type="text" className="form-control"  value={this.state.signupName} onChange={ (e) => this.setState({ signupName: e.target.value }) }/>
+								<input type="text" className="form-control" value={this.state.signupName} onChange={ (e) => this.setState({ signupName: e.target.value }) }/>
 							</div>
 							<div className="form-group">
 						  		<label htmlFor="exampleInputPassword1">Email</label>
-								<input type="text" className="form-control"    value={this.state.signupEmail}  onChange={ (e) => this.setState({ signupEmail: e.target.value }) }/>
+								<input type="text" className="form-control" value={this.state.signupEmail}  onChange={ (e) => this.setState({ signupEmail: e.target.value }) }/>
 						 	</div>
 							<div className="form-group">
 								<label htmlFor="exampleInputPassword1">Password</label>
-								<input type="text" className="form-control"   value={this.state.signupPassword} onChange={ (e) => this.setState({ signupPassword: e.target.value }) }/>
+								<input type="password" className="form-control" value={this.state.signupPassword} onChange={ (e) => this.setState({ signupPassword: e.target.value }) }/>
 							</div>
 							<button onClick={this.signupSubmit} className="btn btn-primary" type="submit">Submit</button>
 						</div>
@@ -266,11 +266,11 @@ class App extends Component {
 							<h2> Write your impressions!</h2>
 							<div className="form-group">
 								<label htmlFor="exampleInputPassword1">Title</label>
-								<input type="text" className="form-control" name="email"  value={this.state.entryTitle}  onChange={ (e) => this.setState({ entryTitle: e.target.value }) }/>
+								<input type="text" className="form-control" name="email" value={this.state.entryTitle}  onChange={ (e) => this.setState({ entryTitle: e.target.value }) }/>
 							</div>
 							<div className="form-group">
 								<label htmlFor="exampleInputPassword1">Comment</label>
-								<textarea  className="form-control"    onChange={ (e) => this.setState({ entryContent: e.target.value }) }>
+								<textarea className="form-control" onChange={ (e) => this.setState({ entryContent: e.target.value }) }>
 									{this.state.entryContent}
 								</textarea>
 							</div>

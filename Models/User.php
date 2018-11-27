@@ -1,12 +1,17 @@
 <?
 class User extends Model {
-	
+
 	private function generateToken() {
 		return substr( "abcdefghijklmnopqrstuvwxyz" ,mt_rand( 0 ,25 ) ,1 ) .substr( md5( time( ) ) ,1 );
 	}
 
 	public function login($email,$password) {
 		$db = new Db;
+
+		$options = [
+			'cost' => 12,
+		];
+ 
 		$result = $db->query("Select * from users where email='$email' AND password='$password';");
 		if ($result!=[]) {
 			forEach($result[0] as $key=>$value) {

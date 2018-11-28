@@ -130,7 +130,7 @@ class Entry extends React.Component {
 				</div>
 				}
 				{this.props.entry.comments.map((comment, i) => {
-					return (<Comment comment={comment}></Comment>)
+					return (<Comment app={this.props.app} user={this.props.user} comment={comment}></Comment>)
 				})}
 				<WriteComment entry={this.props.entry} user={this.props.user} app={this.props.app}/>
 

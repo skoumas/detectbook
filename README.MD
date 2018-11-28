@@ -1,5 +1,9 @@
 #detectbook
 
+## Latest Release
+- Retrieve hasMany and one-to-one relationships dynamically
+- Edit/Delete comments
+
 ## Latest Relesae
 - Added Edit Entry
 - Added Delete Entry
@@ -7,12 +11,6 @@
 - Signup function
 - Validator fixed
 - Relationship hasMany retrieves data
-
-##TODO
-- Fix the to many DB connections error when retrieving child of hasMany
-- Return user data for each comment
-- Edit comment
-- Delete comment
 
 ##To run please do:
 1) Have docker and docker-compose at your computer

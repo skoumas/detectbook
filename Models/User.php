@@ -11,7 +11,8 @@ class User extends Model {
 		$options = [
 			'cost' => 12,
 		];
- 
+		$password = crypt($password, $_ENV["SALT"]);
+	 
 		$result = $db->query("Select * from users where email='$email' AND password='$password';");
 		if ($result!=[]) {
 			forEach($result[0] as $key=>$value) {

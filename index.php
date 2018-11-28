@@ -9,6 +9,9 @@ function __autoload($class) {
     require "./Models/".  end($parts) . '.php';
 }
 
+// We can have many guestbooks
+$guestbook_id = 1;
+
 $router = new Router();
 header('Access-Control-Allow-Origin: *');
 
@@ -39,9 +42,9 @@ $router->get('/api/entries', function(){
 	die(json_encode($entries));
 });
 
-$router->get('/api/guestbook/{:id}/entries', function($id){
+$router->get('/api/entries', function($id){
 	header('Content-Type: application/json');
-	$entries = Entry::where("guestbook_id",$id);
+	$entries = Entry::where("guestbook_id",$guestbook_id);
 	die(json_encode($entries));
 });
 
@@ -72,11 +75,12 @@ $router->post('/api/user/create', function(){
 	// 	'cost' => 12,
 	// ];
 	// $password = password_hash($post->password, PASSWORD_BCRYPT, $options);
+	$password = crypt($post->password, $_ENV["SALT"]);
 
 	$user = new User();
 	$user->name = $post->name;
 	$user->email = $post->email;
-	$user->password = $post->password;
+	$user->password = $password;
 	$user->created_at =  date('Y-m-d H:i:s');
 	$user->updated_at = date('Y-m-d H:i:s');
 	$user->save();
@@ -186,6 +190,45 @@ $router->post('/api/comment/create', function(){
 	$comment->content = $post->comment;
 	$comment->entry_id = $post->entry_id;
 	$comment->created_at =  date('Y-m-d H:i:s');
+	$comment->updated_at = date('Y-m-d H:i:s');
+	$comment->save();
+	die(json_encode(["success"=>true]));
+});
+
+$router->post('/api/comments/{:id}/delete', function($id){
+	$post = json_decode(file_get_contents('php://input'));
+	$validator = new Validator((array)$post,array(
+		"_token"=>"required"
+	));
+	if (!$validator->isValid()) {
+		die(json_encode(["success"=>false,"errors"=>$validator->errors()]));
+	}
+	$user = new User();
+	$userExists = $user->getByToken($post->_token);
+	if (!$userExists) {
+		die(json_encode(["success"=>false,"errors"=>"Token is invalid"]));
+	}
+	$post = json_decode(file_get_contents('php://input'));
+	$success = Comment::delete($id);
+	die(json_encode(["success"=>$success]));
+});
+
+$router->post('/api/comments/{:id}/update', function($id){
+	$post = json_decode(file_get_contents('php://input'));
+	$validator = new Validator((array)$post,array(
+		"_token"=>"required"
+	));
+	if (!$validator->isValid()) {
+		die(json_encode(["success"=>false,"errors"=>$validator->errors()]));
+	}
+	$user = new User();
+	$userExists = $user->getByToken($post->_token);
+	if (!$userExists) {
+		die(json_encode(["success"=>false,"errors"=>"Token is invalid"]));
+	}
+	$comment = new Comment();
+	$comment->find($id);
+	$comment->content = $post->content;
 	$comment->updated_at = date('Y-m-d H:i:s');
 	$comment->save();
 	die(json_encode(["success"=>true]));

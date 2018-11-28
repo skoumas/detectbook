@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.7.24)
 # Database: detectbook
-# Generation Time: 2018-11-22 16:06:32 +0000
+# Generation Time: 2018-11-28 13:57:15 +0000
 # ************************************************************
 
 
@@ -40,8 +40,10 @@ LOCK TABLES `comments` WRITE;
 
 INSERT INTO `comments` (`id`, `content`, `user_id`, `entry_id`, `created_at`, `updated_at`)
 VALUES
-	(2,'This is so cool!',1,42,'2018-11-22 16:00:09','2018-11-22 16:00:09'),
-	(4,'I really like this stuff!',1,42,'2018-11-22 16:06:10','2018-11-22 16:06:10');
+	(17,'I like this comment and I am user 1',15,18,'2018-11-28 13:50:56','2018-11-28 13:50:56'),
+	(18,'I like this comment and I am user 1',15,19,'2018-11-28 13:51:32','2018-11-28 13:51:32'),
+	(19,'This is a marvelous test!',14,19,'2018-11-28 13:51:49','2018-11-28 13:51:49'),
+	(20,'',14,19,'2018-11-28 13:51:50','2018-11-28 13:51:50');
 
 /*!40000 ALTER TABLE `comments` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -68,10 +70,10 @@ LOCK TABLES `entries` WRITE;
 
 INSERT INTO `entries` (`id`, `guestbook_id`, `user_id`, `content`, `created_at`, `updated_at`, `title`)
 VALUES
-	(39,1,21,'This is such a cool website!','2018-11-22 16:00:09','2018-11-22 16:00:09','Cool!'),
-	(40,1,21,'Are you reactive?','2018-11-22 16:00:24','2018-11-22 16:00:24','React baby react!'),
-	(41,1,21,'Oh Hi Mark! How are you ??','2018-11-22 16:00:36','2018-11-22 16:00:36','Oh Hi Mark!'),
-	(42,1,1,'This is just terrible!','2018-11-22 16:02:28','2018-11-22 16:02:28','I find website terrible!');
+	(16,1,14,'This is the first test ever','2018-11-28 13:49:57','2018-11-28 13:49:57','Test 1'),
+	(17,1,14,'This is the second test ever','2018-11-28 13:50:02','2018-11-28 13:50:02','Test 2'),
+	(18,1,14,'This is the third test ever','2018-11-28 13:50:14','2018-11-28 13:50:14','Test 3'),
+	(19,1,15,'This is the new comment!','2018-11-28 13:50:49','2018-11-28 13:50:49','This is user 2 comment');
 
 /*!40000 ALTER TABLE `entries` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -90,15 +92,6 @@ CREATE TABLE `guestbooks` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-LOCK TABLES `guestbooks` WRITE;
-/*!40000 ALTER TABLE `guestbooks` DISABLE KEYS */;
-
-INSERT INTO `guestbooks` (`id`, `title`, `created_at`, `updated_at`)
-VALUES
-	(1,'The main guestbook','2018-10-20 00:00:00','2018-10-20 00:00:00');
-
-/*!40000 ALTER TABLE `guestbooks` ENABLE KEYS */;
-UNLOCK TABLES;
 
 
 # Dump of table users
@@ -123,8 +116,8 @@ LOCK TABLES `users` WRITE;
 
 INSERT INTO `users` (`id`, `name`, `email`, `password`, `created_at`, `updated_at`, `token`)
 VALUES
-	(1,'George','skoumas.net@gmail.com','123123','2018-10-20 00:00:00','2018-10-20 00:00:00','k05339e5818c30edc0e9e6380bbeeafb'),
-	(21,'Billy','billy@test.com','123123','2018-11-22 14:24:16','2018-11-22 14:24:16','ub016043cf047e0f95ac30cc67d7e689');
+	(14,'user1','user1@test.com','LcROAs4LnHs06','2018-11-28 13:49:12','2018-11-28 13:49:12','l4fb1971ac5a03d839224e1d2ecd95a3'),
+	(15,'user2','user2@test.com','LcROAs4LnHs06','2018-11-28 13:49:26','2018-11-28 13:49:26','w4393beb79609888cffb95fdf1f1506e');
 
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;

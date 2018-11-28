@@ -60,7 +60,7 @@ class App extends Component {
 	}
 
 	loadComponents() {
-		fetch("http://0.0.0.0:8100/api/guestbook/1/entries")
+		fetch("http://0.0.0.0:8100/api/entries")
 			.then(res => res.json())
 			.then(
 			(result) => {
@@ -199,7 +199,7 @@ class App extends Component {
 				<div className="container">
 					{this.state.logged &&
 						<div align="center">
-							<h1 align="center"> Oh hi {this.state.user.name } | <button onClick={this.logOut} className="btn-xs btn btn-danger">Logout</button></h1>
+							<h1 align="center"> {this.state.user.name } | <button onClick={this.logOut} className="btn-xs btn btn-danger">Logout</button></h1>
 						</div>
 					}
 					{!this.state.logged &&
